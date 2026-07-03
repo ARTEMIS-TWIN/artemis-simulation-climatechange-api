@@ -1,0 +1,3457 @@
+openapi: 3.1.0
+info:
+  title: ARTEMIS Python Microservices API Catalog
+  version: 1.1.0
+  description: Aggregated OpenAPI catalog generated from the attached FastAPI applications. The prefixed paths are documentation
+    namespaces. For interactive calls against the running services, select the corresponding individual service specification
+    from the Swagger UI dropdown.
+servers:
+- url: http://10.0.4.10
+  description: ARTEMIS development VM; individual services use ports 8101-8106
+- url: http://localhost
+  description: Local documentation context
+tags:
+- name: ClimateRag
+  description: PDF processing, GROBID extraction, embeddings and RAG answer generation.
+- name: FutureClimate
+  description: CMIP6 climate values and climate-derived heritage, bioclimatic and tourism indices.
+- name: RandomGen
+  description: Stateless sampling from probability distributions.
+- name: SensorCluster
+  description: Stateless simulation of a network of sensors and event vectors.
+- name: SingleSensor
+  description: Stateless simulation of one sensor reading or a sequence of readings.
+- name: SurfaceTemp
+  description: OBJ model upload, model registry, face-debug extraction and surface-temperature simulation for Unity.
+paths:
+  /climaterag/health:
+    get:
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/health`.'
+  /climaterag/llm-config:
+    get:
+      summary: Llm Config
+      operationId: llm_config_llm_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/llm-config`.'
+  /climaterag/embedding-config:
+    get:
+      summary: Embedding Config
+      operationId: embedding_config_embedding_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/embedding-config`.'
+  /climaterag/allowed-llm-domains:
+    get:
+      summary: Allowed Llm Domains
+      operationId: allowed_llm_domains_allowed_llm_domains_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/allowed-llm-domains`.'
+  /climaterag/process-pdf-upload:
+    post:
+      summary: Process Pdf Upload
+      operationId: process_pdf_upload_process_pdf_upload_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ClimateRag_Body_process_pdf_upload_process_pdf_upload_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_ProcessPdfResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_HTTPValidationError'
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/process-pdf-upload`.'
+  /climaterag/process-pdf-from-url:
+    post:
+      summary: Process Pdf From Url
+      operationId: process_pdf_from_url_process_pdf_from_url_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateRag_UrlPdfRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_ProcessPdfResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_HTTPValidationError'
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/process-pdf-from-url`.'
+  /climaterag/process-pdf-base64:
+    post:
+      summary: Process Pdf Base64
+      operationId: process_pdf_base64_process_pdf_base64_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateRag_Base64PdfRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_ProcessPdfResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_HTTPValidationError'
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/process-pdf-base64`.'
+  /climaterag/embed-texts:
+    post:
+      summary: Embed Texts
+      operationId: embed_texts_embed_texts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateRag_EmbedTextsRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_EmbedTextsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_HTTPValidationError'
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/embed-texts`.'
+  /climaterag/embed-query:
+    post:
+      summary: Embed Query
+      operationId: embed_query_embed_query_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateRag_EmbedQueryRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_EmbedQueryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_HTTPValidationError'
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/embed-query`.'
+  /climaterag/generate-answer:
+    post:
+      summary: Generate Answer
+      operationId: generate_answer_generate_answer_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateRag_GenerateAnswerRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_GenerateAnswerResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateRag_HTTPValidationError'
+      tags:
+      - ClimateRag
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8101`. Original service path: `/generate-answer`.'
+  /futureclimate:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/`.'
+  /futureclimate/datasets:
+    get:
+      summary: List Supported
+      operationId: list_supported_datasets_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/datasets`.'
+  /futureclimate/climate:
+    post:
+      summary: Get Climate Value
+      operationId: get_climate_value_climate_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_ClimateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_ClimateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/climate`.'
+  /futureclimate/heritage/daily:
+    post:
+      summary: Get Heritage Daily
+      operationId: get_heritage_daily_heritage_daily_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_HeritageDailyRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HeritageDailyResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/heritage/daily`.'
+  /futureclimate/heritage/window:
+    post:
+      summary: Get Heritage Window
+      operationId: get_heritage_window_heritage_window_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_HeritageWindowRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HeritageAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/heritage/window`.'
+  /futureclimate/heritage/annual:
+    post:
+      summary: Get Heritage Annual
+      operationId: get_heritage_annual_heritage_annual_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_HeritageAnnualRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HeritageAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/heritage/annual`.'
+  /futureclimate/gardens/bioclim:
+    post:
+      summary: Get Gardens Bioclim
+      operationId: get_gardens_bioclim_gardens_bioclim_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_BioclimRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_BioclimResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/gardens/bioclim`.'
+  /futureclimate/tourism/daily:
+    post:
+      summary: Get Tourism Daily
+      operationId: get_tourism_daily_tourism_daily_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_TourismDailyRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_TourismDailyResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/tourism/daily`.'
+  /futureclimate/tourism/window:
+    post:
+      summary: Get Tourism Window
+      operationId: get_tourism_window_tourism_window_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_TourismWindowRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_TourismAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/tourism/window`.'
+  /futureclimate/tourism/annual:
+    post:
+      summary: Get Tourism Annual
+      operationId: get_tourism_annual_tourism_annual_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_TourismAnnualRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_TourismAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/tourism/annual`.'
+  /futureclimate/tourism/period:
+    post:
+      summary: Get Tourism Period
+      operationId: get_tourism_period_tourism_period_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FutureClimate_TourismPeriodRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_TourismAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FutureClimate_HTTPValidationError'
+      tags:
+      - FutureClimate
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8102`. Original service path: `/tourism/period`.'
+  /randomgen:
+    get:
+      summary: Service info
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - RandomGen
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8103`. Original service path: `/`.'
+  /randomgen/distributions:
+    get:
+      summary: List supported distributions
+      description: 'Returns the names of all supported distributions.
+
+
+        Service base URL: `http://10.0.4.10:8103`. Original service path: `/distributions`.'
+      operationId: list_distributions_distributions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - RandomGen
+  /randomgen/examples:
+    get:
+      summary: Parameter examples for each distribution
+      description: 'Returns a complete parameter example for each supported distribution.
+
+
+        Service base URL: `http://10.0.4.10:8103`. Original service path: `/examples`.'
+      operationId: list_examples_examples_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - RandomGen
+  /randomgen/examples/{distribution}:
+    get:
+      summary: Parameter example for a single distribution
+      description: 'Returns the parameter example for the requested distribution.
+
+
+        Service base URL: `http://10.0.4.10:8103`. Original service path: `/examples/{distribution}`.'
+      operationId: get_example_examples__distribution__get
+      parameters:
+      - name: distribution
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Distribution
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RandomGen_HTTPValidationError'
+      tags:
+      - RandomGen
+  /randomgen/sample:
+    post:
+      summary: Draw n samples from a distribution
+      description: "Draws **n** samples from the requested distribution and returns them as a list.\n\nExample body:\n```json\n\
+        {\n  \"distribution\": \"normal\",\n  \"params\": { \"mean\": 0.0, \"stddev\": 1.0 },\n  \"n\": 500\n}\n```\n\nService\
+        \ base URL: `http://10.0.4.10:8103`. Original service path: `/sample`."
+      operationId: sample_sample_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RandomGen_SampleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RandomGen_SampleResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RandomGen_HTTPValidationError'
+      tags:
+      - RandomGen
+  /sensorcluster:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SensorCluster
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8104`. Original service path: `/`.'
+  /sensorcluster/distributions:
+    get:
+      summary: List Supported Distributions
+      operationId: list_supported_distributions_distributions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SensorCluster
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8104`. Original service path: `/distributions`.'
+  /sensorcluster/examples:
+    get:
+      summary: List Examples
+      operationId: list_examples_examples_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SensorCluster
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8104`. Original service path: `/examples`.'
+  /sensorcluster/simulate/events:
+    post:
+      summary: Simulate Events
+      operationId: simulate_events_simulate_events_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorCluster_EventVectorRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorCluster_EventVectorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorCluster_HTTPValidationError'
+      tags:
+      - SensorCluster
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8104`. Original service path: `/simulate/events`.'
+  /singlesensor:
+    get:
+      summary: Service info
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SingleSensor
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8105`. Original service path: `/`.'
+  /singlesensor/distributions:
+    get:
+      summary: List supported distributions
+      description: 'Returns the names of all supported distributions.
+
+
+        Service base URL: `http://10.0.4.10:8105`. Original service path: `/distributions`.'
+      operationId: list_distributions_distributions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SingleSensor
+  /singlesensor/examples:
+    get:
+      summary: Parameter examples for each distribution
+      description: 'Returns a parameter example for each supported distribution.
+
+
+        Service base URL: `http://10.0.4.10:8105`. Original service path: `/examples`.'
+      operationId: list_examples_examples_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SingleSensor
+  /singlesensor/reading:
+    post:
+      summary: Generate a single reading from the sensor defined in the body
+      description: 'Generates **one reading** from the sensor described in the JSON body.
+
+
+        Service base URL: `http://10.0.4.10:8105`. Original service path: `/reading`.'
+      operationId: get_reading_reading_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleSensor_SensorConfig'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleSensor_SensorReading'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleSensor_HTTPValidationError'
+      tags:
+      - SingleSensor
+  /singlesensor/readings:
+    post:
+      summary: Generate N readings from the sensor defined in the body
+      description: "Generates **N readings** (1–1000) from the sensor described in the JSON body.\n\nExample body:\n```json\n\
+        {\n  \"sensor\": {\n    \"name\": \"temperature\",\n    \"lat\": 41.9028,\n    \"lon\": 12.4964,\n    \"localization\"\
+        : \"room 1\",\n    \"unit\": \"°C\",\n    \"distribution\": \"normal\",\n    \"params\": { \"mean\": 20.0, \"stddev\"\
+        : 2.0 }\n  },\n  \"n\": 10\n}\n```\n\nService base URL: `http://10.0.4.10:8105`. Original service path: `/readings`."
+      operationId: get_readings_readings_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleSensor_ReadingRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SingleSensor_SensorReading'
+                type: array
+                title: Response Get Readings Readings Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SingleSensor_HTTPValidationError'
+      tags:
+      - SingleSensor
+  /surfacetemp/health:
+    get:
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/health`.'
+  /surfacetemp/models/upload:
+    post:
+      summary: Upload Model
+      operationId: upload_model_models_upload_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SurfaceTemp_Body_upload_model_models_upload_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_UploadResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_HTTPValidationError'
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/models/upload`.'
+  /surfacetemp/models/{user_id}:
+    get:
+      summary: List Models
+      operationId: list_models_models__user_id__get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_HTTPValidationError'
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/models/{user_id}`.'
+  /surfacetemp/models/{user_id}/{model_id}:
+    get:
+      summary: Get Model
+      operationId: get_model_models__user_id___model_id__get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_HTTPValidationError'
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/models/{user_id}/{model_id}`.'
+    delete:
+      summary: Delete Model
+      operationId: delete_model_models__user_id___model_id__delete
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_HTTPValidationError'
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/models/{user_id}/{model_id}`.'
+  /surfacetemp/models/{user_id}/{model_id}/face-debug:
+    get:
+      summary: Get Face Debug
+      operationId: get_face_debug_models__user_id___model_id__face_debug_get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_FaceDebugResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_HTTPValidationError'
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/models/{user_id}/{model_id}/face-debug`.'
+  /surfacetemp/simulate:
+    post:
+      summary: Simulate
+      operationId: simulate_simulate_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SurfaceTemp_SimulationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_SimulationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurfaceTemp_HTTPValidationError'
+      tags:
+      - SurfaceTemp
+      description: '
+
+
+        Service base URL: `http://10.0.4.10:8106`. Original service path: `/simulate`.'
+components:
+  schemas:
+    ClimateRag_AnswerChunkItem:
+      properties:
+        source_file:
+          type: string
+          title: Source File
+        section_heading:
+          type: string
+          title: Section Heading
+        chunk_index:
+          type: integer
+          title: Chunk Index
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - source_file
+      - section_heading
+      - chunk_index
+      - text
+      title: AnswerChunkItem
+    ClimateRag_Base64PdfRequest:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        pdf_base64:
+          type: string
+          title: Pdf Base64
+        section_filter:
+          anyOf:
+          - $ref: '#/components/schemas/ClimateRag_SectionFilterConfig'
+          - type: 'null'
+      type: object
+      required:
+      - filename
+      - pdf_base64
+      title: Base64PdfRequest
+    ClimateRag_Body_process_pdf_upload_process_pdf_upload_post:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+        section_filter_json:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Filter Json
+      type: object
+      required:
+      - file
+      title: Body_process_pdf_upload_process_pdf_upload_post
+    ClimateRag_ChunkItem:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+        section_heading:
+          type: string
+          title: Section Heading
+        chunk_index:
+          type: integer
+          title: Chunk Index
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - chunk_id
+      - section_heading
+      - chunk_index
+      - text
+      title: ChunkItem
+    ClimateRag_DocumentInfo:
+      properties:
+        doc_id:
+          type: string
+          title: Doc Id
+        source_filename:
+          type: string
+          title: Source Filename
+        source_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Url
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      type: object
+      required:
+      - doc_id
+      - source_filename
+      title: DocumentInfo
+    ClimateRag_EmbedQueryRequest:
+      properties:
+        query:
+          type: string
+          title: Query
+      type: object
+      required:
+      - query
+      title: EmbedQueryRequest
+    ClimateRag_EmbedQueryResponse:
+      properties:
+        embedding_model:
+          type: string
+          title: Embedding Model
+        dimension:
+          type: integer
+          title: Dimension
+        embedding:
+          items:
+            type: number
+          type: array
+          title: Embedding
+      type: object
+      required:
+      - embedding_model
+      - dimension
+      - embedding
+      title: EmbedQueryResponse
+    ClimateRag_EmbedTextItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - id
+      - text
+      title: EmbedTextItem
+    ClimateRag_EmbedTextsRequest:
+      properties:
+        texts:
+          items:
+            $ref: '#/components/schemas/ClimateRag_EmbedTextItem'
+          type: array
+          title: Texts
+      type: object
+      required:
+      - texts
+      title: EmbedTextsRequest
+    ClimateRag_EmbedTextsResponse:
+      properties:
+        embedding_model:
+          type: string
+          title: Embedding Model
+        dimension:
+          type: integer
+          title: Dimension
+        vectors:
+          items:
+            $ref: '#/components/schemas/ClimateRag_EmbedVectorItem'
+          type: array
+          title: Vectors
+      type: object
+      required:
+      - embedding_model
+      - dimension
+      - vectors
+      title: EmbedTextsResponse
+    ClimateRag_EmbedVectorItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        embedding:
+          items:
+            type: number
+          type: array
+          title: Embedding
+      type: object
+      required:
+      - id
+      - embedding
+      title: EmbedVectorItem
+    ClimateRag_GenerateAnswerRequest:
+      properties:
+        question:
+          type: string
+          title: Question
+        chunks:
+          items:
+            $ref: '#/components/schemas/ClimateRag_AnswerChunkItem'
+          type: array
+          title: Chunks
+        max_tokens:
+          type: integer
+          maximum: 1024.0
+          minimum: 32.0
+          title: Max Tokens
+          default: 400
+        temperature:
+          type: number
+          maximum: 1.5
+          minimum: 0.0
+          title: Temperature
+          default: 0.2
+        top_p:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Top P
+          default: 0.9
+        return_prompt_preview:
+          type: boolean
+          title: Return Prompt Preview
+          default: false
+        system_prompt_override:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: System Prompt Override
+        llm_override:
+          anyOf:
+          - $ref: '#/components/schemas/ClimateRag_LLMOverrideConfig'
+          - type: 'null'
+      type: object
+      required:
+      - question
+      - chunks
+      title: GenerateAnswerRequest
+    ClimateRag_GenerateAnswerResponse:
+      properties:
+        answer:
+          type: string
+          title: Answer
+        used_chunks:
+          items:
+            $ref: '#/components/schemas/ClimateRag_UsedChunk'
+          type: array
+          title: Used Chunks
+        prompt_preview:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Preview
+        generation_backend:
+          type: string
+          title: Generation Backend
+        system_prompt_used:
+          type: string
+          title: System Prompt Used
+      type: object
+      required:
+      - answer
+      - used_chunks
+      - generation_backend
+      - system_prompt_used
+      title: GenerateAnswerResponse
+    ClimateRag_HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ClimateRag_ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ClimateRag_LLMOverrideConfig:
+      properties:
+        mode:
+          type: string
+          const: remote_openai_compatible
+          title: Mode
+        base_url:
+          type: string
+          title: Base Url
+        api_key:
+          type: string
+          title: Api Key
+        model:
+          type: string
+          title: Model
+        chat_completions_path:
+          type: string
+          title: Chat Completions Path
+          default: /chat/completions
+        request_timeout:
+          type: integer
+          maximum: 300.0
+          minimum: 5.0
+          title: Request Timeout
+          default: 60
+      type: object
+      required:
+      - mode
+      - base_url
+      - api_key
+      - model
+      title: LLMOverrideConfig
+    ClimateRag_ProcessPdfResponse:
+      properties:
+        document:
+          $ref: '#/components/schemas/ClimateRag_DocumentInfo'
+        chunks:
+          items:
+            $ref: '#/components/schemas/ClimateRag_ChunkItem'
+          type: array
+          title: Chunks
+      type: object
+      required:
+      - document
+      - chunks
+      title: ProcessPdfResponse
+    ClimateRag_SectionFilterConfig:
+      properties:
+        mode:
+          type: string
+          enum:
+          - blacklist
+          - allowlist
+          title: Mode
+          default: blacklist
+        patterns:
+          items:
+            type: string
+          type: array
+          title: Patterns
+        disable_default_blacklist:
+          type: boolean
+          title: Disable Default Blacklist
+          default: false
+      type: object
+      title: SectionFilterConfig
+    ClimateRag_UrlPdfRequest:
+      properties:
+        pdf_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Pdf Url
+        section_filter:
+          anyOf:
+          - $ref: '#/components/schemas/ClimateRag_SectionFilterConfig'
+          - type: 'null'
+      type: object
+      required:
+      - pdf_url
+      title: UrlPdfRequest
+    ClimateRag_UsedChunk:
+      properties:
+        rank:
+          type: integer
+          title: Rank
+        source_file:
+          type: string
+          title: Source File
+        section_heading:
+          type: string
+          title: Section Heading
+        chunk_index:
+          type: integer
+          title: Chunk Index
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - rank
+      - source_file
+      - section_heading
+      - chunk_index
+      - text
+      title: UsedChunk
+    ClimateRag_ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    FutureClimate_BioclimRequest:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        start_year:
+          type: integer
+          minimum: 1.0
+          title: Start Year
+          description: First year of the bioclimatic period
+        end_year:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: End Year
+          description: Last year of the bioclimatic period. If omitted, start_year is used.
+        include_monthly_climatology:
+          type: boolean
+          title: Include Monthly Climatology
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - start_year
+      title: BioclimRequest
+      example:
+        end_year: 2060
+        include_monthly_climatology: true
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        start_year: 2041
+    FutureClimate_BioclimResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        aggregation:
+          type: string
+          title: Aggregation
+        period:
+          additionalProperties:
+            type: string
+          type: object
+          title: Period
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        indices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Indices
+        monthly_climatology:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Monthly Climatology
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - scenario
+      - aggregation
+      - period
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - indices
+      - files_used
+      - notes
+      title: BioclimResponse
+    FutureClimate_ClimateRequest:
+      properties:
+        variable:
+          type: string
+          title: Variable
+          description: 'Climate variable: tasmin, tasmax, pr, hur'
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Date in dd/mm/yyyy format
+      type: object
+      required:
+      - variable
+      - scenario
+      - lon
+      - lat
+      - date
+      title: ClimateRequest
+      example:
+        date: 01/08/2050
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        variable: tasmin
+    FutureClimate_ClimateResponse:
+      properties:
+        variable:
+          type: string
+          title: Variable
+        variable_description:
+          type: string
+          title: Variable Description
+        scenario:
+          type: string
+          title: Scenario
+        time_resolution:
+          type: string
+          title: Time Resolution
+        date_requested:
+          type: string
+          title: Date Requested
+        date_dataset:
+          type: string
+          title: Date Dataset
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        value_native:
+          type: number
+          title: Value Native
+        unit_native:
+          type: string
+          title: Unit Native
+        value_converted:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Value Converted
+        unit_converted:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Converted
+        file_used:
+          type: string
+          title: File Used
+      type: object
+      required:
+      - variable
+      - variable_description
+      - scenario
+      - time_resolution
+      - date_requested
+      - date_dataset
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - value_native
+      - unit_native
+      - file_used
+      title: ClimateResponse
+    FutureClimate_HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/FutureClimate_ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    FutureClimate_HeritageAggregateResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        aggregation:
+          type: string
+          title: Aggregation
+        period:
+          additionalProperties:
+            type: string
+          type: object
+          title: Period
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        indices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Indices
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+        daily_series:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Daily Series
+      type: object
+      required:
+      - scenario
+      - aggregation
+      - period
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - indices
+      - thresholds
+      - files_used
+      - notes
+      title: HeritageAggregateResponse
+    FutureClimate_HeritageAnnualRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Humid Threshold Percent
+          default: 80.0
+        very_humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Very Humid Threshold Percent
+          default: 90.0
+        dry_rh_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Dry Rh Threshold Percent
+          default: 60.0
+        dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: Dtr Threshold C
+          default: 15.0
+        hot_day_threshold_c:
+          type: number
+          title: Hot Day Threshold C
+          default: 30.0
+        very_hot_day_threshold_c:
+          type: number
+          title: Very Hot Day Threshold C
+          default: 35.0
+        bio_tmin_c:
+          type: number
+          title: Bio Tmin C
+          default: 5.0
+        bio_tmax_c:
+          type: number
+          title: Bio Tmax C
+          default: 30.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        year:
+          type: integer
+          minimum: 1.0
+          title: Year
+          description: Year to evaluate
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - year
+      title: HeritageAnnualRequest
+      example:
+        bio_tmax_c: 30.0
+        bio_tmin_c: 5.0
+        dry_rh_threshold_percent: 60.0
+        dtr_threshold_c: 15.0
+        heavy_rain_threshold_mm: 20.0
+        hot_day_threshold_c: 30.0
+        humid_threshold_percent: 80.0
+        include_daily_series: false
+        lat: 43.5
+        lon: 11.25
+        rain_day_threshold_mm: 1.0
+        scenario: ssp245
+        very_hot_day_threshold_c: 35.0
+        very_humid_threshold_percent: 90.0
+        year: 2050
+    FutureClimate_HeritageDailyRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Humid Threshold Percent
+          default: 80.0
+        very_humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Very Humid Threshold Percent
+          default: 90.0
+        dry_rh_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Dry Rh Threshold Percent
+          default: 60.0
+        dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: Dtr Threshold C
+          default: 15.0
+        hot_day_threshold_c:
+          type: number
+          title: Hot Day Threshold C
+          default: 30.0
+        very_hot_day_threshold_c:
+          type: number
+          title: Very Hot Day Threshold C
+          default: 35.0
+        bio_tmin_c:
+          type: number
+          title: Bio Tmin C
+          default: 5.0
+        bio_tmax_c:
+          type: number
+          title: Bio Tmax C
+          default: 30.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Date in dd/mm/yyyy format
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: HeritageDailyRequest
+      example:
+        bio_tmax_c: 30.0
+        bio_tmin_c: 5.0
+        date: 01/08/2050
+        dry_rh_threshold_percent: 60.0
+        dtr_threshold_c: 15.0
+        heavy_rain_threshold_mm: 20.0
+        hot_day_threshold_c: 30.0
+        humid_threshold_percent: 80.0
+        lat: 43.5
+        lon: 11.25
+        rain_day_threshold_mm: 1.0
+        scenario: ssp245
+        very_hot_day_threshold_c: 35.0
+        very_humid_threshold_percent: 90.0
+    FutureClimate_HeritageDailyResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        date_requested:
+          type: string
+          title: Date Requested
+        date_dataset:
+          type: string
+          title: Date Dataset
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        values:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Values
+        flags:
+          additionalProperties:
+            type: boolean
+          type: object
+          title: Flags
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - scenario
+      - date_requested
+      - date_dataset
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - values
+      - flags
+      - thresholds
+      - files_used
+      - notes
+      title: HeritageDailyResponse
+    FutureClimate_HeritageWindowRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Humid Threshold Percent
+          default: 80.0
+        very_humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Very Humid Threshold Percent
+          default: 90.0
+        dry_rh_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Dry Rh Threshold Percent
+          default: 60.0
+        dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: Dtr Threshold C
+          default: 15.0
+        hot_day_threshold_c:
+          type: number
+          title: Hot Day Threshold C
+          default: 30.0
+        very_hot_day_threshold_c:
+          type: number
+          title: Very Hot Day Threshold C
+          default: 35.0
+        bio_tmin_c:
+          type: number
+          title: Bio Tmin C
+          default: 5.0
+        bio_tmax_c:
+          type: number
+          title: Bio Tmax C
+          default: 30.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Reference date in dd/mm/yyyy format
+        window_days:
+          type: integer
+          maximum: 366.0
+          minimum: 1.0
+          title: Window Days
+          default: 30
+        window_mode:
+          type: string
+          enum:
+          - centered
+          - backward
+          - forward
+          title: Window Mode
+          default: centered
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: HeritageWindowRequest
+      example:
+        bio_tmax_c: 30.0
+        bio_tmin_c: 5.0
+        date: 01/08/2050
+        dry_rh_threshold_percent: 60.0
+        dtr_threshold_c: 15.0
+        heavy_rain_threshold_mm: 20.0
+        hot_day_threshold_c: 30.0
+        humid_threshold_percent: 80.0
+        include_daily_series: false
+        lat: 43.5
+        lon: 11.25
+        rain_day_threshold_mm: 1.0
+        scenario: ssp245
+        very_hot_day_threshold_c: 35.0
+        very_humid_threshold_percent: 90.0
+        window_days: 30
+        window_mode: centered
+    FutureClimate_TourismAggregateResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        tourism_profile:
+          type: string
+          title: Tourism Profile
+        aggregation:
+          type: string
+          title: Aggregation
+        period:
+          additionalProperties:
+            type: string
+          type: object
+          title: Period
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        indices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Indices
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+        daily_series:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Daily Series
+        monthly_summary:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Monthly Summary
+        annual_series:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Annual Series
+      type: object
+      required:
+      - scenario
+      - tourism_profile
+      - aggregation
+      - period
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - indices
+      - thresholds
+      - files_used
+      - notes
+      title: TourismAggregateResponse
+    FutureClimate_TourismAnnualRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        very_heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Very Heavy Rain Threshold Mm
+          default: 50.0
+        humidex_discomfort_threshold:
+          type: number
+          title: Humidex Discomfort Threshold
+          default: 30.0
+        humidex_high_discomfort_threshold:
+          type: number
+          title: Humidex High Discomfort Threshold
+          default: 40.0
+        heat_index_warning_threshold_c:
+          type: number
+          title: Heat Index Warning Threshold C
+          default: 32.0
+        heat_index_danger_threshold_c:
+          type: number
+          title: Heat Index Danger Threshold C
+          default: 41.0
+        tropical_night_threshold_c:
+          type: number
+          title: Tropical Night Threshold C
+          default: 20.0
+        very_warm_night_threshold_c:
+          type: number
+          title: Very Warm Night Threshold C
+          default: 25.0
+        high_dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: High Dtr Threshold C
+          default: 18.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        year:
+          type: integer
+          minimum: 1.0
+          title: Year
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          default: urban_cultural
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+        include_monthly_summary:
+          type: boolean
+          title: Include Monthly Summary
+          default: true
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - year
+      title: TourismAnnualRequest
+      example:
+        include_daily_series: false
+        include_monthly_summary: true
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        tourism_profile: urban_cultural
+        year: 2050
+    FutureClimate_TourismDailyRequest:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Date in dd/mm/yyyy format
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          description: 'Tourism profile: urban_cultural, historic_garden, walking_outdoor'
+          default: urban_cultural
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: TourismDailyRequest
+      example:
+        date: 01/08/2050
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        tourism_profile: urban_cultural
+    FutureClimate_TourismDailyResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        tourism_profile:
+          type: string
+          title: Tourism Profile
+        date_requested:
+          type: string
+          title: Date Requested
+        date_dataset:
+          type: string
+          title: Date Dataset
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        values:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Values
+        flags:
+          additionalProperties:
+            type: boolean
+          type: object
+          title: Flags
+        scores:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Scores
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - scenario
+      - tourism_profile
+      - date_requested
+      - date_dataset
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - values
+      - flags
+      - scores
+      - thresholds
+      - files_used
+      - notes
+      title: TourismDailyResponse
+    FutureClimate_TourismPeriodRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        very_heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Very Heavy Rain Threshold Mm
+          default: 50.0
+        humidex_discomfort_threshold:
+          type: number
+          title: Humidex Discomfort Threshold
+          default: 30.0
+        humidex_high_discomfort_threshold:
+          type: number
+          title: Humidex High Discomfort Threshold
+          default: 40.0
+        heat_index_warning_threshold_c:
+          type: number
+          title: Heat Index Warning Threshold C
+          default: 32.0
+        heat_index_danger_threshold_c:
+          type: number
+          title: Heat Index Danger Threshold C
+          default: 41.0
+        tropical_night_threshold_c:
+          type: number
+          title: Tropical Night Threshold C
+          default: 20.0
+        very_warm_night_threshold_c:
+          type: number
+          title: Very Warm Night Threshold C
+          default: 25.0
+        high_dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: High Dtr Threshold C
+          default: 18.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        start_year:
+          type: integer
+          minimum: 1.0
+          title: Start Year
+        end_year:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: End Year
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          default: urban_cultural
+        include_annual_series:
+          type: boolean
+          title: Include Annual Series
+          default: true
+        include_monthly_summary:
+          type: boolean
+          title: Include Monthly Summary
+          default: true
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - start_year
+      title: TourismPeriodRequest
+      example:
+        end_year: 2060
+        include_annual_series: true
+        include_monthly_summary: true
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        start_year: 2041
+        tourism_profile: urban_cultural
+    FutureClimate_TourismWindowRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        very_heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Very Heavy Rain Threshold Mm
+          default: 50.0
+        humidex_discomfort_threshold:
+          type: number
+          title: Humidex Discomfort Threshold
+          default: 30.0
+        humidex_high_discomfort_threshold:
+          type: number
+          title: Humidex High Discomfort Threshold
+          default: 40.0
+        heat_index_warning_threshold_c:
+          type: number
+          title: Heat Index Warning Threshold C
+          default: 32.0
+        heat_index_danger_threshold_c:
+          type: number
+          title: Heat Index Danger Threshold C
+          default: 41.0
+        tropical_night_threshold_c:
+          type: number
+          title: Tropical Night Threshold C
+          default: 20.0
+        very_warm_night_threshold_c:
+          type: number
+          title: Very Warm Night Threshold C
+          default: 25.0
+        high_dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: High Dtr Threshold C
+          default: 18.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Reference date in dd/mm/yyyy format
+        window_days:
+          type: integer
+          maximum: 366.0
+          minimum: 1.0
+          title: Window Days
+          default: 30
+        window_mode:
+          type: string
+          enum:
+          - centered
+          - backward
+          - forward
+          title: Window Mode
+          default: centered
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          default: urban_cultural
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: TourismWindowRequest
+      example:
+        date: 01/08/2050
+        include_daily_series: false
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        tourism_profile: urban_cultural
+        window_days: 30
+        window_mode: centered
+    FutureClimate_ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    RandomGen_HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/RandomGen_ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    RandomGen_SampleRequest:
+      properties:
+        distribution:
+          type: string
+          enum:
+          - bernoulli
+          - beta
+          - cauchy
+          - discrete_uniform
+          - erlang
+          - exponential
+          - extreme_value_1a
+          - extreme_value_1b
+          - gamma
+          - inverse_gaussian
+          - inverse_weibull
+          - inverted_weibull
+          - johnson_bounded
+          - johnson_unbounded
+          - laplace
+          - logistic
+          - log_laplace
+          - log_logistic
+          - log_normal
+          - log_normal_2
+          - log_normal_mean_stddev
+          - normal
+          - pareto
+          - pearson_type_5
+          - pearson_type_6
+          - poisson
+          - triangular
+          - uniform
+          - weibull
+          - empirical
+          title: Distribution
+          description: Distribution to sample from
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+          description: Distribution parameters
+        n:
+          type: integer
+          maximum: 100000.0
+          minimum: 1.0
+          title: N
+          description: Number of samples to draw (1–100 000)
+          default: 1
+      type: object
+      required:
+      - distribution
+      - params
+      title: SampleRequest
+    RandomGen_SampleResponse:
+      properties:
+        distribution:
+          type: string
+          title: Distribution
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+        n:
+          type: integer
+          title: N
+        samples:
+          items:
+            type: number
+          type: array
+          title: Samples
+      type: object
+      required:
+      - distribution
+      - params
+      - n
+      - samples
+      title: SampleResponse
+    RandomGen_ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SensorCluster_EventVectorRequest:
+      properties:
+        network:
+          $ref: '#/components/schemas/SensorCluster_SensorNetwork'
+        n_events:
+          type: integer
+          maximum: 10000.0
+          minimum: 1.0
+          title: N Events
+        use_random_walk:
+          type: boolean
+          title: Use Random Walk
+          description: If false, random_walk sensors are reinitialized at each event.
+          default: true
+        initial_state:
+          anyOf:
+          - additionalProperties:
+              type: number
+            type: object
+          - type: 'null'
+          title: Initial State
+          description: Optional initial state for random_walk sensors, keyed by node name.
+      type: object
+      required:
+      - network
+      - n_events
+      title: EventVectorRequest
+    SensorCluster_EventVectorResponse:
+      properties:
+        network_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Network Name
+        n_events:
+          type: integer
+          title: N Events
+        use_random_walk:
+          type: boolean
+          title: Use Random Walk
+        events:
+          items:
+            $ref: '#/components/schemas/SensorCluster_NetworkEvent'
+          type: array
+          title: Events
+        final_state:
+          additionalProperties:
+            type: number
+          type: object
+          title: Final State
+      type: object
+      required:
+      - n_events
+      - use_random_walk
+      - events
+      - final_state
+      title: EventVectorResponse
+    SensorCluster_HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/SensorCluster_ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SensorCluster_NetworkEvent:
+      properties:
+        event_index:
+          type: integer
+          title: Event Index
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        readings:
+          items:
+            $ref: '#/components/schemas/SensorCluster_SensorReading'
+          type: array
+          title: Readings
+      type: object
+      required:
+      - event_index
+      - timestamp
+      - readings
+      title: NetworkEvent
+    SensorCluster_SensorConfig:
+      properties:
+        node:
+          type: string
+          title: Node
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        unit:
+          type: string
+          title: Unit
+        distribution:
+          type: string
+          enum:
+          - bernoulli
+          - beta
+          - cauchy
+          - discrete_uniform
+          - erlang
+          - exponential
+          - extreme_value_1a
+          - extreme_value_1b
+          - gamma
+          - inverse_gaussian
+          - inverse_weibull
+          - inverted_weibull
+          - johnson_bounded
+          - johnson_unbounded
+          - laplace
+          - logistic
+          - log_laplace
+          - log_logistic
+          - log_normal
+          - log_normal_2
+          - log_normal_mean_stddev
+          - normal
+          - pareto
+          - pearson_type_5
+          - pearson_type_6
+          - poisson
+          - random_walk
+          - triangular
+          - uniform
+          - weibull
+          - empirical
+          title: Distribution
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - node
+      - unit
+      - distribution
+      title: SensorConfig
+    SensorCluster_SensorNetwork:
+      properties:
+        network_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Network Name
+        sensors:
+          items:
+            $ref: '#/components/schemas/SensorCluster_SensorConfig'
+          type: array
+          title: Sensors
+      type: object
+      required:
+      - sensors
+      title: SensorNetwork
+    SensorCluster_SensorReading:
+      properties:
+        node:
+          type: string
+          title: Node
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        value:
+          type: number
+          title: Value
+        unit:
+          type: string
+          title: Unit
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      required:
+      - node
+      - value
+      - unit
+      - timestamp
+      title: SensorReading
+    SensorCluster_ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SingleSensor_HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/SingleSensor_ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SingleSensor_ReadingRequest:
+      properties:
+        sensor:
+          $ref: '#/components/schemas/SingleSensor_SensorConfig'
+        n:
+          type: integer
+          maximum: 1000.0
+          minimum: 1.0
+          title: N
+          description: Number of readings to generate
+          default: 1
+      type: object
+      required:
+      - sensor
+      title: ReadingRequest
+    SingleSensor_SensorConfig:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Sensor name (e.g. 'temperature')
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+          description: Geographic latitude
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+          description: Geographic longitude
+        localization:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Localization
+          description: Textual location (e.g. 'room 1')
+        unit:
+          type: string
+          title: Unit
+          description: Unit of measure (e.g. '°C', 'mm/h')
+        distribution:
+          type: string
+          enum:
+          - bernoulli
+          - beta
+          - cauchy
+          - discrete_uniform
+          - erlang
+          - exponential
+          - extreme_value_1a
+          - extreme_value_1b
+          - gamma
+          - inverse_gaussian
+          - inverse_weibull
+          - inverted_weibull
+          - johnson_bounded
+          - johnson_unbounded
+          - laplace
+          - logistic
+          - log_laplace
+          - log_logistic
+          - log_normal
+          - log_normal_2
+          - log_normal_mean_stddev
+          - normal
+          - pareto
+          - pearson_type_5
+          - pearson_type_6
+          - poisson
+          - triangular
+          - uniform
+          - weibull
+          - empirical
+          title: Distribution
+          description: Statistical distribution type
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+          description: Distribution parameters
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Free-text description of the sensor
+      type: object
+      required:
+      - name
+      - unit
+      - distribution
+      title: SensorConfig
+    SingleSensor_SensorReading:
+      properties:
+        sensor:
+          type: string
+          title: Sensor
+        value:
+          type: number
+          title: Value
+        unit:
+          type: string
+          title: Unit
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        localization:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Localization
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      required:
+      - sensor
+      - value
+      - unit
+      - lat
+      - lon
+      - localization
+      - timestamp
+      title: SensorReading
+    SingleSensor_ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SurfaceTemp_Body_upload_model_models_upload_post:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        latitude:
+          type: number
+          title: Latitude
+        longitude:
+          type: number
+          title: Longitude
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        model_3d:
+          type: string
+          format: binary
+          title: Model 3D
+      type: object
+      required:
+      - user_id
+      - model_id
+      - latitude
+      - longitude
+      - model_3d
+      title: Body_upload_model_models_upload_post
+    SurfaceTemp_Coordinates:
+      properties:
+        latitude:
+          type: number
+          title: Latitude
+        longitude:
+          type: number
+          title: Longitude
+      type: object
+      required:
+      - latitude
+      - longitude
+      title: Coordinates
+    SurfaceTemp_FaceDebugEntry:
+      properties:
+        face_index:
+          type: integer
+          title: Face Index
+        centroid:
+          items:
+            type: number
+          type: array
+          title: Centroid
+        normal:
+          items:
+            type: number
+          type: array
+          title: Normal
+        area:
+          type: number
+          title: Area
+      type: object
+      required:
+      - face_index
+      - centroid
+      - normal
+      - area
+      title: FaceDebugEntry
+    SurfaceTemp_FaceDebugResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        face_count:
+          type: integer
+          title: Face Count
+        face_debug:
+          items:
+            $ref: '#/components/schemas/SurfaceTemp_FaceDebugEntry'
+          type: array
+          title: Face Debug
+      type: object
+      required:
+      - status
+      - user_id
+      - model_id
+      - face_count
+      - face_debug
+      title: FaceDebugResponse
+    SurfaceTemp_FaceTemperatureData:
+      properties:
+        temperature_unit:
+          type: string
+          title: Temperature Unit
+        face_count:
+          type: integer
+          title: Face Count
+        temperatures:
+          items:
+            type: number
+          type: array
+          title: Temperatures
+      type: object
+      required:
+      - temperature_unit
+      - face_count
+      - temperatures
+      title: FaceTemperatureData
+    SurfaceTemp_HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/SurfaceTemp_ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SurfaceTemp_ModelInfo:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        coordinates:
+          $ref: '#/components/schemas/SurfaceTemp_Coordinates'
+        created_at:
+          type: string
+          title: Created At
+        faces_count:
+          type: integer
+          title: Faces Count
+        vertices_count:
+          type: integer
+          title: Vertices Count
+        has_normals:
+          type: boolean
+          title: Has Normals
+        file_sha256:
+          type: string
+          title: File Sha256
+        model_signature:
+          type: string
+          title: Model Signature
+      type: object
+      required:
+      - user_id
+      - model_id
+      - coordinates
+      - created_at
+      - faces_count
+      - vertices_count
+      - has_normals
+      - file_sha256
+      - model_signature
+      title: ModelInfo
+    SurfaceTemp_SimulationRequest:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        meteo_station_temperature_max:
+          type: number
+          title: Meteo Station Temperature Max
+          description: Maximum air temperature in °C
+        year:
+          type: integer
+          maximum: 2100.0
+          minimum: 2000.0
+          title: Year
+          default: 2025
+        day_of_year:
+          type: integer
+          maximum: 366.0
+          minimum: 1.0
+          title: Day Of Year
+        times_of_day:
+          items:
+            type: integer
+          type: array
+          title: Times Of Day
+          description: Local hours, e.g. [8, 14]
+        timezone_str:
+          type: string
+          title: Timezone Str
+          default: Europe/Rome
+        enable_shadow_raycast:
+          type: boolean
+          title: Enable Shadow Raycast
+          default: false
+        shadow_bias:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Shadow Bias
+          default: 0.01
+        linke_turbidity:
+          anyOf:
+          - type: number
+            maximum: 12.0
+            minimum: 1.0
+          - type: 'null'
+          title: Linke Turbidity
+          description: Optional Linke turbidity. If omitted, pvlib lookup/default is used.
+        albedo:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Albedo
+          description: Ground reflectance used for reflected radiation.
+          default: 0.2
+        use_ground_reflected:
+          type: boolean
+          title: Use Ground Reflected
+          description: If true, include ground-reflected radiation.
+          default: true
+        surface_temp_offset_c:
+          type: number
+          maximum: 25.0
+          minimum: 0.0
+          title: Surface Temp Offset C
+          description: Surface temperature range below Tmax for minimum-radiation faces.
+          default: 8.0
+      type: object
+      required:
+      - user_id
+      - model_id
+      - meteo_station_temperature_max
+      - day_of_year
+      - times_of_day
+      title: SimulationRequest
+    SurfaceTemp_SimulationResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        face_temperatures:
+          $ref: '#/components/schemas/SurfaceTemp_FaceTemperatureData'
+      type: object
+      required:
+      - status
+      - user_id
+      - model_id
+      - metadata
+      - face_temperatures
+      title: SimulationResponse
+    SurfaceTemp_UploadResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        message:
+          type: string
+          title: Message
+        model:
+          $ref: '#/components/schemas/SurfaceTemp_ModelInfo'
+      type: object
+      required:
+      - status
+      - message
+      - model
+      title: UploadResponse
+    SurfaceTemp_ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

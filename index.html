@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>ARTEMIS Python API Documentation</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+  <style>
+    html { box-sizing: border-box; overflow-y: scroll; }
+    *, *:before, *:after { box-sizing: inherit; }
+    body { margin: 0; background: #fafafa; }
+    .topbar { background: #1f2937; color: #fff; padding: 10px 16px; font-family: Arial, sans-serif; }
+    .topbar strong { margin-right: 10px; }
+    .topbar span { color: #d1d5db; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <strong>ARTEMIS Python microservices</strong>
+    <span>Swagger UI generated from the attached FastAPI apps</span>
+  </div>
+  <div id="swagger-ui"></div>
+
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function() {
+      const ui = SwaggerUIBundle({
+        urls: [
+          { url: "openapi_artemis.yaml", name: "ARTEMIS aggregate catalog" },
+          { url: "artemis_api_docs_updated/climaterag-openapi.yaml", name: "ClimateRag" },
+          { url: "artemis_api_docs_updated/futureclimate-openapi.yaml", name: "FutureClimate" },
+          { url: "artemis_api_docs_updated/randomgen-openapi.yaml", name: "RandomGen" },
+          { url: "artemis_api_docs_updated/sensorcluster-openapi.yaml", name: "SensorCluster" },
+          { url: "artemis_api_docs_updated/singlesensor-openapi.yaml", name: "SingleSensor" },
+          { url: "artemis_api_docs_updated/surfacetemp-openapi.yaml", name: "SurfaceTemp" }
+        ],
+        "urls.primaryName": "ARTEMIS aggregate catalog",
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      });
+      window.ui = ui;
+    };
+  </script>
+</body>
+</html>
