@@ -1,0 +1,595 @@
+openapi: 3.1.0
+info:
+  title: Climate RAG Processing API
+  version: 2.6.0-allowlist-hardening
+  x-artemis-service: ClimateRag
+  description: '
+
+
+    ARTEMIS Development VM server: http://10.0.4.10:8101.'
+paths:
+  /health:
+    get:
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /llm-config:
+    get:
+      summary: Llm Config
+      operationId: llm_config_llm_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /embedding-config:
+    get:
+      summary: Embedding Config
+      operationId: embedding_config_embedding_config_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /allowed-llm-domains:
+    get:
+      summary: Allowed Llm Domains
+      operationId: allowed_llm_domains_allowed_llm_domains_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /process-pdf-upload:
+    post:
+      summary: Process Pdf Upload
+      operationId: process_pdf_upload_process_pdf_upload_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_process_pdf_upload_process_pdf_upload_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessPdfResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /process-pdf-from-url:
+    post:
+      summary: Process Pdf From Url
+      operationId: process_pdf_from_url_process_pdf_from_url_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UrlPdfRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessPdfResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /process-pdf-base64:
+    post:
+      summary: Process Pdf Base64
+      operationId: process_pdf_base64_process_pdf_base64_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Base64PdfRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessPdfResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /embed-texts:
+    post:
+      summary: Embed Texts
+      operationId: embed_texts_embed_texts_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbedTextsRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbedTextsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /embed-query:
+    post:
+      summary: Embed Query
+      operationId: embed_query_embed_query_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbedQueryRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbedQueryResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /generate-answer:
+    post:
+      summary: Generate Answer
+      operationId: generate_answer_generate_answer_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerateAnswerRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateAnswerResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    AnswerChunkItem:
+      properties:
+        source_file:
+          type: string
+          title: Source File
+        section_heading:
+          type: string
+          title: Section Heading
+        chunk_index:
+          type: integer
+          title: Chunk Index
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - source_file
+      - section_heading
+      - chunk_index
+      - text
+      title: AnswerChunkItem
+    Base64PdfRequest:
+      properties:
+        filename:
+          type: string
+          title: Filename
+        pdf_base64:
+          type: string
+          title: Pdf Base64
+        section_filter:
+          anyOf:
+          - $ref: '#/components/schemas/SectionFilterConfig'
+          - type: 'null'
+      type: object
+      required:
+      - filename
+      - pdf_base64
+      title: Base64PdfRequest
+    Body_process_pdf_upload_process_pdf_upload_post:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+        section_filter_json:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Section Filter Json
+      type: object
+      required:
+      - file
+      title: Body_process_pdf_upload_process_pdf_upload_post
+    ChunkItem:
+      properties:
+        chunk_id:
+          type: string
+          title: Chunk Id
+        section_heading:
+          type: string
+          title: Section Heading
+        chunk_index:
+          type: integer
+          title: Chunk Index
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - chunk_id
+      - section_heading
+      - chunk_index
+      - text
+      title: ChunkItem
+    DocumentInfo:
+      properties:
+        doc_id:
+          type: string
+          title: Doc Id
+        source_filename:
+          type: string
+          title: Source Filename
+        source_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Source Url
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      type: object
+      required:
+      - doc_id
+      - source_filename
+      title: DocumentInfo
+    EmbedQueryRequest:
+      properties:
+        query:
+          type: string
+          title: Query
+      type: object
+      required:
+      - query
+      title: EmbedQueryRequest
+    EmbedQueryResponse:
+      properties:
+        embedding_model:
+          type: string
+          title: Embedding Model
+        dimension:
+          type: integer
+          title: Dimension
+        embedding:
+          items:
+            type: number
+          type: array
+          title: Embedding
+      type: object
+      required:
+      - embedding_model
+      - dimension
+      - embedding
+      title: EmbedQueryResponse
+    EmbedTextItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - id
+      - text
+      title: EmbedTextItem
+    EmbedTextsRequest:
+      properties:
+        texts:
+          items:
+            $ref: '#/components/schemas/EmbedTextItem'
+          type: array
+          title: Texts
+      type: object
+      required:
+      - texts
+      title: EmbedTextsRequest
+    EmbedTextsResponse:
+      properties:
+        embedding_model:
+          type: string
+          title: Embedding Model
+        dimension:
+          type: integer
+          title: Dimension
+        vectors:
+          items:
+            $ref: '#/components/schemas/EmbedVectorItem'
+          type: array
+          title: Vectors
+      type: object
+      required:
+      - embedding_model
+      - dimension
+      - vectors
+      title: EmbedTextsResponse
+    EmbedVectorItem:
+      properties:
+        id:
+          type: string
+          title: Id
+        embedding:
+          items:
+            type: number
+          type: array
+          title: Embedding
+      type: object
+      required:
+      - id
+      - embedding
+      title: EmbedVectorItem
+    GenerateAnswerRequest:
+      properties:
+        question:
+          type: string
+          title: Question
+        chunks:
+          items:
+            $ref: '#/components/schemas/AnswerChunkItem'
+          type: array
+          title: Chunks
+        max_tokens:
+          type: integer
+          maximum: 1024.0
+          minimum: 32.0
+          title: Max Tokens
+          default: 400
+        temperature:
+          type: number
+          maximum: 1.5
+          minimum: 0.0
+          title: Temperature
+          default: 0.2
+        top_p:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Top P
+          default: 0.9
+        return_prompt_preview:
+          type: boolean
+          title: Return Prompt Preview
+          default: false
+        system_prompt_override:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: System Prompt Override
+        llm_override:
+          anyOf:
+          - $ref: '#/components/schemas/LLMOverrideConfig'
+          - type: 'null'
+      type: object
+      required:
+      - question
+      - chunks
+      title: GenerateAnswerRequest
+    GenerateAnswerResponse:
+      properties:
+        answer:
+          type: string
+          title: Answer
+        used_chunks:
+          items:
+            $ref: '#/components/schemas/UsedChunk'
+          type: array
+          title: Used Chunks
+        prompt_preview:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Prompt Preview
+        generation_backend:
+          type: string
+          title: Generation Backend
+        system_prompt_used:
+          type: string
+          title: System Prompt Used
+      type: object
+      required:
+      - answer
+      - used_chunks
+      - generation_backend
+      - system_prompt_used
+      title: GenerateAnswerResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    LLMOverrideConfig:
+      properties:
+        mode:
+          type: string
+          const: remote_openai_compatible
+          title: Mode
+        base_url:
+          type: string
+          title: Base Url
+        api_key:
+          type: string
+          title: Api Key
+        model:
+          type: string
+          title: Model
+        chat_completions_path:
+          type: string
+          title: Chat Completions Path
+          default: /chat/completions
+        request_timeout:
+          type: integer
+          maximum: 300.0
+          minimum: 5.0
+          title: Request Timeout
+          default: 60
+      type: object
+      required:
+      - mode
+      - base_url
+      - api_key
+      - model
+      title: LLMOverrideConfig
+    ProcessPdfResponse:
+      properties:
+        document:
+          $ref: '#/components/schemas/DocumentInfo'
+        chunks:
+          items:
+            $ref: '#/components/schemas/ChunkItem'
+          type: array
+          title: Chunks
+      type: object
+      required:
+      - document
+      - chunks
+      title: ProcessPdfResponse
+    SectionFilterConfig:
+      properties:
+        mode:
+          type: string
+          enum:
+          - blacklist
+          - allowlist
+          title: Mode
+          default: blacklist
+        patterns:
+          items:
+            type: string
+          type: array
+          title: Patterns
+        disable_default_blacklist:
+          type: boolean
+          title: Disable Default Blacklist
+          default: false
+      type: object
+      title: SectionFilterConfig
+    UrlPdfRequest:
+      properties:
+        pdf_url:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          format: uri
+          title: Pdf Url
+        section_filter:
+          anyOf:
+          - $ref: '#/components/schemas/SectionFilterConfig'
+          - type: 'null'
+      type: object
+      required:
+      - pdf_url
+      title: UrlPdfRequest
+    UsedChunk:
+      properties:
+        rank:
+          type: integer
+          title: Rank
+        source_file:
+          type: string
+          title: Source File
+        section_heading:
+          type: string
+          title: Section Heading
+        chunk_index:
+          type: integer
+          title: Chunk Index
+        text:
+          type: string
+          title: Text
+      type: object
+      required:
+      - rank
+      - source_file
+      - section_heading
+      - chunk_index
+      - text
+      title: UsedChunk
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+servers:
+- url: http://10.0.4.10:8101
+  description: ClimateRag on ARTEMIS Development VM
+- url: http://localhost:8101
+  description: ClimateRag local port mapping
+tags: []

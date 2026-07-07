@@ -2,7 +2,10 @@ openapi: 3.1.0
 info:
   title: Sensor Simulator - Single Sensor
   description: 'Stateless microservice to simulate a sensor using statistical distributions. The sensor is defined by the
-    user in the JSON body of each request: no data is stored on the server.'
+    user in the JSON body of each request: no data is stored on the server.
+
+
+    ARTEMIS Development VM server: http://10.0.4.10:8105.'
   version: 1.0.0
   x-artemis-service: SingleSensor
 paths:
@@ -266,7 +269,7 @@ components:
       title: ValidationError
 servers:
 - url: http://10.0.4.10:8105
-  description: SingleSensor on ARTEMIS development VM
+  description: SingleSensor on ARTEMIS Development VM
 - url: http://localhost:8105
   description: SingleSensor local port mapping
 tags: []

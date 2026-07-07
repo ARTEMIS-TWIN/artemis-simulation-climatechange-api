@@ -2,14 +2,38 @@ openapi: 3.1.0
 info:
   title: ARTEMIS Python Microservices API Catalog
   version: 1.1.0
-  description: Aggregated OpenAPI catalog generated from the attached FastAPI applications. The prefixed paths are documentation
+  description: 'Aggregated OpenAPI catalog generated from the attached FastAPI applications. The prefixed paths are documentation
     namespaces. For interactive calls against the running services, select the corresponding individual service specification
     from the Swagger UI dropdown.
+
+
+    Catalog generated for ARTEMIS Python microservices. Individual YAML files contain executable service-specific servers
+    on ports 8101-8106. The aggregate catalog keeps service-prefixed paths to avoid path collisions across microservices.'
 servers:
-- url: http://10.0.4.10
-  description: ARTEMIS development VM; individual services use ports 8101-8106
-- url: http://localhost
-  description: Local documentation context
+- url: http://10.0.4.10:8101
+  description: ClimateRag on ARTEMIS Development VM
+- url: http://10.0.4.10:8102
+  description: FutureClimate on ARTEMIS Development VM
+- url: http://10.0.4.10:8103
+  description: RandomGen on ARTEMIS Development VM
+- url: http://10.0.4.10:8104
+  description: SensorCluster on ARTEMIS Development VM
+- url: http://10.0.4.10:8105
+  description: SingleSensor on ARTEMIS Development VM
+- url: http://10.0.4.10:8106
+  description: SurfaceTemp on ARTEMIS Development VM
+- url: http://localhost:8101
+  description: Local ClimateRag port mapping
+- url: http://localhost:8102
+  description: Local FutureClimate port mapping
+- url: http://localhost:8103
+  description: Local RandomGen port mapping
+- url: http://localhost:8104
+  description: Local SensorCluster port mapping
+- url: http://localhost:8105
+  description: Local SingleSensor port mapping
+- url: http://localhost:8106
+  description: Local SurfaceTemp port mapping
 tags:
 - name: ClimateRag
   description: PDF processing, GROBID extraction, embeddings and RAG answer generation.
@@ -3455,3 +3479,28 @@ components:
       - msg
       - type
       title: ValidationError
+x-artemis-services:
+  ClimateRag:
+    port: 8101
+    openapi: climaterag-openapi.yaml
+    development_url: http://10.0.4.10:8101
+  FutureClimate:
+    port: 8102
+    openapi: futureclimate-openapi.yaml
+    development_url: http://10.0.4.10:8102
+  RandomGen:
+    port: 8103
+    openapi: randomgen-openapi.yaml
+    development_url: http://10.0.4.10:8103
+  SensorCluster:
+    port: 8104
+    openapi: sensorcluster-openapi.yaml
+    development_url: http://10.0.4.10:8104
+  SingleSensor:
+    port: 8105
+    openapi: singlesensor-openapi.yaml
+    development_url: http://10.0.4.10:8105
+  SurfaceTemp:
+    port: 8106
+    openapi: surfacetemp-openapi.yaml
+    development_url: http://10.0.4.10:8106
