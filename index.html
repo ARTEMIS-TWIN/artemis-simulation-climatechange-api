@@ -16,7 +16,7 @@
 <body>
   <div class="topbar">
     <strong>ARTEMIS Python microservices</strong>
-    <span>Swagger UI generated from the attached FastAPI apps</span>
+    <span>Swagger UI for executable per-service OpenAPI definitions</span>
   </div>
   <div id="swagger-ui"></div>
 
@@ -26,14 +26,14 @@
     window.onload = function() {
       const ui = SwaggerUIBundle({
         urls: [
-          { url: "openapi.yaml", name: "ARTEMIS aggregate catalog" },
+          { url: "climaterag-openapi.yaml", name: "ClimateRag" },
           { url: "futureclimate-openapi.yaml", name: "FutureClimate" },
           { url: "randomgen-openapi.yaml", name: "RandomGen" },
           { url: "sensorcluster-openapi.yaml", name: "SensorCluster" },
           { url: "singlesensor-openapi.yaml", name: "SingleSensor" },
           { url: "surfacetemp-openapi.yaml", name: "SurfaceTemp" }
         ],
-        "urls.primaryName": "ARTEMIS aggregate catalog",
+        "urls.primaryName": "ClimateRag",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
