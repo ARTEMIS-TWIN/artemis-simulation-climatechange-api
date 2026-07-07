@@ -1,0 +1,210 @@
+openapi: 3.1.0
+info:
+  title: Simulation Procedures Service
+  description: Stateless microservice that draws n samples from a probability distribution. POST the distribution name, its
+    parameters and the desired sample size — receive a list of floating-point values.
+  version: 1.0.0
+  x-artemis-service: RandomGen
+paths:
+  /:
+    get:
+      summary: Service info
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /distributions:
+    get:
+      summary: List supported distributions
+      description: Returns the names of all supported distributions.
+      operationId: list_distributions_distributions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /examples:
+    get:
+      summary: Parameter examples for each distribution
+      description: Returns a complete parameter example for each supported distribution.
+      operationId: list_examples_examples_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /examples/{distribution}:
+    get:
+      summary: Parameter example for a single distribution
+      description: Returns the parameter example for the requested distribution.
+      operationId: get_example_examples__distribution__get
+      parameters:
+      - name: distribution
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Distribution
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /sample:
+    post:
+      summary: Draw n samples from a distribution
+      description: "Draws **n** samples from the requested distribution and returns them as a list.\n\nExample body:\n```json\n\
+        {\n  \"distribution\": \"normal\",\n  \"params\": { \"mean\": 0.0, \"stddev\": 1.0 },\n  \"n\": 500\n}\n```"
+      operationId: sample_sample_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SampleRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SampleResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SampleRequest:
+      properties:
+        distribution:
+          type: string
+          enum:
+          - bernoulli
+          - beta
+          - cauchy
+          - discrete_uniform
+          - erlang
+          - exponential
+          - extreme_value_1a
+          - extreme_value_1b
+          - gamma
+          - inverse_gaussian
+          - inverse_weibull
+          - inverted_weibull
+          - johnson_bounded
+          - johnson_unbounded
+          - laplace
+          - logistic
+          - log_laplace
+          - log_logistic
+          - log_normal
+          - log_normal_2
+          - log_normal_mean_stddev
+          - normal
+          - pareto
+          - pearson_type_5
+          - pearson_type_6
+          - poisson
+          - triangular
+          - uniform
+          - weibull
+          - empirical
+          title: Distribution
+          description: Distribution to sample from
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+          description: Distribution parameters
+        n:
+          type: integer
+          maximum: 100000.0
+          minimum: 1.0
+          title: N
+          description: Number of samples to draw (1–100 000)
+          default: 1
+      type: object
+      required:
+      - distribution
+      - params
+      title: SampleRequest
+    SampleResponse:
+      properties:
+        distribution:
+          type: string
+          title: Distribution
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+        n:
+          type: integer
+          title: N
+        samples:
+          items:
+            type: number
+          type: array
+          title: Samples
+      type: object
+      required:
+      - distribution
+      - params
+      - n
+      - samples
+      title: SampleResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+servers:
+- url: http://10.0.4.10:8103
+  description: RandomGen on ARTEMIS development VM
+- url: http://localhost:8103
+  description: RandomGen local port mapping
+tags: []

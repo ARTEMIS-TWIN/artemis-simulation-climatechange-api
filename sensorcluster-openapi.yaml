@@ -1,0 +1,296 @@
+openapi: 3.1.0
+info:
+  title: Weather Sensors Simulator - Stateless
+  description: Stateless microservice for sensor network simulation passed entirely via JSON.
+  version: 7.0.0
+  x-artemis-service: SensorCluster
+paths:
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /distributions:
+    get:
+      summary: List Supported Distributions
+      operationId: list_supported_distributions_distributions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /examples:
+    get:
+      summary: List Examples
+      operationId: list_examples_examples_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /simulate/events:
+    post:
+      summary: Simulate Events
+      operationId: simulate_events_simulate_events_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventVectorRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventVectorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    EventVectorRequest:
+      properties:
+        network:
+          $ref: '#/components/schemas/SensorNetwork'
+        n_events:
+          type: integer
+          maximum: 10000.0
+          minimum: 1.0
+          title: N Events
+        use_random_walk:
+          type: boolean
+          title: Use Random Walk
+          description: If false, random_walk sensors are reinitialized at each event.
+          default: true
+        initial_state:
+          anyOf:
+          - additionalProperties:
+              type: number
+            type: object
+          - type: 'null'
+          title: Initial State
+          description: Optional initial state for random_walk sensors, keyed by node name.
+      type: object
+      required:
+      - network
+      - n_events
+      title: EventVectorRequest
+    EventVectorResponse:
+      properties:
+        network_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Network Name
+        n_events:
+          type: integer
+          title: N Events
+        use_random_walk:
+          type: boolean
+          title: Use Random Walk
+        events:
+          items:
+            $ref: '#/components/schemas/NetworkEvent'
+          type: array
+          title: Events
+        final_state:
+          additionalProperties:
+            type: number
+          type: object
+          title: Final State
+      type: object
+      required:
+      - n_events
+      - use_random_walk
+      - events
+      - final_state
+      title: EventVectorResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    NetworkEvent:
+      properties:
+        event_index:
+          type: integer
+          title: Event Index
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+        readings:
+          items:
+            $ref: '#/components/schemas/SensorReading'
+          type: array
+          title: Readings
+      type: object
+      required:
+      - event_index
+      - timestamp
+      - readings
+      title: NetworkEvent
+    SensorConfig:
+      properties:
+        node:
+          type: string
+          title: Node
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        unit:
+          type: string
+          title: Unit
+        distribution:
+          type: string
+          enum:
+          - bernoulli
+          - beta
+          - cauchy
+          - discrete_uniform
+          - erlang
+          - exponential
+          - extreme_value_1a
+          - extreme_value_1b
+          - gamma
+          - inverse_gaussian
+          - inverse_weibull
+          - inverted_weibull
+          - johnson_bounded
+          - johnson_unbounded
+          - laplace
+          - logistic
+          - log_laplace
+          - log_logistic
+          - log_normal
+          - log_normal_2
+          - log_normal_mean_stddev
+          - normal
+          - pareto
+          - pearson_type_5
+          - pearson_type_6
+          - poisson
+          - random_walk
+          - triangular
+          - uniform
+          - weibull
+          - empirical
+          title: Distribution
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+      type: object
+      required:
+      - node
+      - unit
+      - distribution
+      title: SensorConfig
+    SensorNetwork:
+      properties:
+        network_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Network Name
+        sensors:
+          items:
+            $ref: '#/components/schemas/SensorConfig'
+          type: array
+          title: Sensors
+      type: object
+      required:
+      - sensors
+      title: SensorNetwork
+    SensorReading:
+      properties:
+        node:
+          type: string
+          title: Node
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        value:
+          type: number
+          title: Value
+        unit:
+          type: string
+          title: Unit
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      required:
+      - node
+      - value
+      - unit
+      - timestamp
+      title: SensorReading
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+servers:
+- url: http://10.0.4.10:8104
+  description: SensorCluster on ARTEMIS development VM
+- url: http://localhost:8104
+  description: SensorCluster local port mapping
+tags: []

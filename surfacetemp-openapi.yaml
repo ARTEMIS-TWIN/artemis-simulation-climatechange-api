@@ -1,0 +1,495 @@
+openapi: 3.1.0
+info:
+  title: Surface Temperature Simulator API (OBJ Prototype)
+  description: One-time upload of OBJ models, multi-user filesystem registration, thermal simulation on an existing model,
+    and direct JSON response for Unity.
+  version: 11.0.0
+  x-artemis-service: SurfaceTemp
+paths:
+  /health:
+    get:
+      summary: Health
+      operationId: health_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /models/upload:
+    post:
+      summary: Upload Model
+      operationId: upload_model_models_upload_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_upload_model_models_upload_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /models/{user_id}:
+    get:
+      summary: List Models
+      operationId: list_models_models__user_id__get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /models/{user_id}/{model_id}:
+    get:
+      summary: Get Model
+      operationId: get_model_models__user_id___model_id__get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      summary: Delete Model
+      operationId: delete_model_models__user_id___model_id__delete
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /models/{user_id}/{model_id}/face-debug:
+    get:
+      summary: Get Face Debug
+      operationId: get_face_debug_models__user_id___model_id__face_debug_get
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: User Id
+      - name: model_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Model Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaceDebugResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /simulate:
+    post:
+      summary: Simulate
+      operationId: simulate_simulate_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Body_upload_model_models_upload_post:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        latitude:
+          type: number
+          title: Latitude
+        longitude:
+          type: number
+          title: Longitude
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        model_3d:
+          type: string
+          format: binary
+          title: Model 3D
+      type: object
+      required:
+      - user_id
+      - model_id
+      - latitude
+      - longitude
+      - model_3d
+      title: Body_upload_model_models_upload_post
+    Coordinates:
+      properties:
+        latitude:
+          type: number
+          title: Latitude
+        longitude:
+          type: number
+          title: Longitude
+      type: object
+      required:
+      - latitude
+      - longitude
+      title: Coordinates
+    FaceDebugEntry:
+      properties:
+        face_index:
+          type: integer
+          title: Face Index
+        centroid:
+          items:
+            type: number
+          type: array
+          title: Centroid
+        normal:
+          items:
+            type: number
+          type: array
+          title: Normal
+        area:
+          type: number
+          title: Area
+      type: object
+      required:
+      - face_index
+      - centroid
+      - normal
+      - area
+      title: FaceDebugEntry
+    FaceDebugResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        face_count:
+          type: integer
+          title: Face Count
+        face_debug:
+          items:
+            $ref: '#/components/schemas/FaceDebugEntry'
+          type: array
+          title: Face Debug
+      type: object
+      required:
+      - status
+      - user_id
+      - model_id
+      - face_count
+      - face_debug
+      title: FaceDebugResponse
+    FaceTemperatureData:
+      properties:
+        temperature_unit:
+          type: string
+          title: Temperature Unit
+        face_count:
+          type: integer
+          title: Face Count
+        temperatures:
+          items:
+            type: number
+          type: array
+          title: Temperatures
+      type: object
+      required:
+      - temperature_unit
+      - face_count
+      - temperatures
+      title: FaceTemperatureData
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ModelInfo:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+        created_at:
+          type: string
+          title: Created At
+        faces_count:
+          type: integer
+          title: Faces Count
+        vertices_count:
+          type: integer
+          title: Vertices Count
+        has_normals:
+          type: boolean
+          title: Has Normals
+        file_sha256:
+          type: string
+          title: File Sha256
+        model_signature:
+          type: string
+          title: Model Signature
+      type: object
+      required:
+      - user_id
+      - model_id
+      - coordinates
+      - created_at
+      - faces_count
+      - vertices_count
+      - has_normals
+      - file_sha256
+      - model_signature
+      title: ModelInfo
+    SimulationRequest:
+      properties:
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        meteo_station_temperature_max:
+          type: number
+          title: Meteo Station Temperature Max
+          description: Maximum air temperature in °C
+        year:
+          type: integer
+          maximum: 2100.0
+          minimum: 2000.0
+          title: Year
+          default: 2025
+        day_of_year:
+          type: integer
+          maximum: 366.0
+          minimum: 1.0
+          title: Day Of Year
+        times_of_day:
+          items:
+            type: integer
+          type: array
+          title: Times Of Day
+          description: Local hours, e.g. [8, 14]
+        timezone_str:
+          type: string
+          title: Timezone Str
+          default: Europe/Rome
+        enable_shadow_raycast:
+          type: boolean
+          title: Enable Shadow Raycast
+          default: false
+        shadow_bias:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Shadow Bias
+          default: 0.01
+        linke_turbidity:
+          anyOf:
+          - type: number
+            maximum: 12.0
+            minimum: 1.0
+          - type: 'null'
+          title: Linke Turbidity
+          description: Optional Linke turbidity. If omitted, pvlib lookup/default is used.
+        albedo:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          title: Albedo
+          description: Ground reflectance used for reflected radiation.
+          default: 0.2
+        use_ground_reflected:
+          type: boolean
+          title: Use Ground Reflected
+          description: If true, include ground-reflected radiation.
+          default: true
+        surface_temp_offset_c:
+          type: number
+          maximum: 25.0
+          minimum: 0.0
+          title: Surface Temp Offset C
+          description: Surface temperature range below Tmax for minimum-radiation faces.
+          default: 8.0
+      type: object
+      required:
+      - user_id
+      - model_id
+      - meteo_station_temperature_max
+      - day_of_year
+      - times_of_day
+      title: SimulationRequest
+    SimulationResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        user_id:
+          type: string
+          title: User Id
+        model_id:
+          type: string
+          title: Model Id
+        metadata:
+          additionalProperties: true
+          type: object
+          title: Metadata
+        face_temperatures:
+          $ref: '#/components/schemas/FaceTemperatureData'
+      type: object
+      required:
+      - status
+      - user_id
+      - model_id
+      - metadata
+      - face_temperatures
+      title: SimulationResponse
+    UploadResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+        message:
+          type: string
+          title: Message
+        model:
+          $ref: '#/components/schemas/ModelInfo'
+      type: object
+      required:
+      - status
+      - message
+      - model
+      title: UploadResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+servers:
+- url: http://10.0.4.10:8106
+  description: SurfaceTemp on ARTEMIS development VM
+- url: http://localhost:8106
+  description: SurfaceTemp local port mapping
+tags: []

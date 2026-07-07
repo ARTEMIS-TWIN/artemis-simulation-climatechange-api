@@ -1,0 +1,1419 @@
+openapi: 3.1.0
+info:
+  title: Future Climate Sensor API
+  description: API microservice returning climate values from CMIP6 NetCDF files, with selectable scenario and climate variable.
+    The API also exposes heritage-oriented climate indices for outdoor monuments, historic architecture and historic gardens.
+  version: 2.5.0
+  x-artemis-service: FutureClimate
+paths:
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /datasets:
+    get:
+      summary: List Supported
+      operationId: list_supported_datasets_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /climate:
+    post:
+      summary: Get Climate Value
+      operationId: get_climate_value_climate_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClimateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClimateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /heritage/daily:
+    post:
+      summary: Get Heritage Daily
+      operationId: get_heritage_daily_heritage_daily_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeritageDailyRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeritageDailyResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /heritage/window:
+    post:
+      summary: Get Heritage Window
+      operationId: get_heritage_window_heritage_window_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeritageWindowRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeritageAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /heritage/annual:
+    post:
+      summary: Get Heritage Annual
+      operationId: get_heritage_annual_heritage_annual_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeritageAnnualRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeritageAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /gardens/bioclim:
+    post:
+      summary: Get Gardens Bioclim
+      operationId: get_gardens_bioclim_gardens_bioclim_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BioclimRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BioclimResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tourism/daily:
+    post:
+      summary: Get Tourism Daily
+      operationId: get_tourism_daily_tourism_daily_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TourismDailyRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TourismDailyResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tourism/window:
+    post:
+      summary: Get Tourism Window
+      operationId: get_tourism_window_tourism_window_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TourismWindowRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TourismAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tourism/annual:
+    post:
+      summary: Get Tourism Annual
+      operationId: get_tourism_annual_tourism_annual_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TourismAnnualRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TourismAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tourism/period:
+    post:
+      summary: Get Tourism Period
+      operationId: get_tourism_period_tourism_period_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TourismPeriodRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TourismAggregateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    BioclimRequest:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        start_year:
+          type: integer
+          minimum: 1.0
+          title: Start Year
+          description: First year of the bioclimatic period
+        end_year:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: End Year
+          description: Last year of the bioclimatic period. If omitted, start_year is used.
+        include_monthly_climatology:
+          type: boolean
+          title: Include Monthly Climatology
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - start_year
+      title: BioclimRequest
+      example:
+        end_year: 2060
+        include_monthly_climatology: true
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        start_year: 2041
+    BioclimResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        aggregation:
+          type: string
+          title: Aggregation
+        period:
+          additionalProperties:
+            type: string
+          type: object
+          title: Period
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        indices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Indices
+        monthly_climatology:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Monthly Climatology
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - scenario
+      - aggregation
+      - period
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - indices
+      - files_used
+      - notes
+      title: BioclimResponse
+    ClimateRequest:
+      properties:
+        variable:
+          type: string
+          title: Variable
+          description: 'Climate variable: tasmin, tasmax, pr, hur'
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Date in dd/mm/yyyy format
+      type: object
+      required:
+      - variable
+      - scenario
+      - lon
+      - lat
+      - date
+      title: ClimateRequest
+      example:
+        date: 01/08/2050
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        variable: tasmin
+    ClimateResponse:
+      properties:
+        variable:
+          type: string
+          title: Variable
+        variable_description:
+          type: string
+          title: Variable Description
+        scenario:
+          type: string
+          title: Scenario
+        time_resolution:
+          type: string
+          title: Time Resolution
+        date_requested:
+          type: string
+          title: Date Requested
+        date_dataset:
+          type: string
+          title: Date Dataset
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        value_native:
+          type: number
+          title: Value Native
+        unit_native:
+          type: string
+          title: Unit Native
+        value_converted:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Value Converted
+        unit_converted:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Unit Converted
+        file_used:
+          type: string
+          title: File Used
+      type: object
+      required:
+      - variable
+      - variable_description
+      - scenario
+      - time_resolution
+      - date_requested
+      - date_dataset
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - value_native
+      - unit_native
+      - file_used
+      title: ClimateResponse
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HeritageAggregateResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        aggregation:
+          type: string
+          title: Aggregation
+        period:
+          additionalProperties:
+            type: string
+          type: object
+          title: Period
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        indices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Indices
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+        daily_series:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Daily Series
+      type: object
+      required:
+      - scenario
+      - aggregation
+      - period
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - indices
+      - thresholds
+      - files_used
+      - notes
+      title: HeritageAggregateResponse
+    HeritageAnnualRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Humid Threshold Percent
+          default: 80.0
+        very_humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Very Humid Threshold Percent
+          default: 90.0
+        dry_rh_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Dry Rh Threshold Percent
+          default: 60.0
+        dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: Dtr Threshold C
+          default: 15.0
+        hot_day_threshold_c:
+          type: number
+          title: Hot Day Threshold C
+          default: 30.0
+        very_hot_day_threshold_c:
+          type: number
+          title: Very Hot Day Threshold C
+          default: 35.0
+        bio_tmin_c:
+          type: number
+          title: Bio Tmin C
+          default: 5.0
+        bio_tmax_c:
+          type: number
+          title: Bio Tmax C
+          default: 30.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        year:
+          type: integer
+          minimum: 1.0
+          title: Year
+          description: Year to evaluate
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - year
+      title: HeritageAnnualRequest
+      example:
+        bio_tmax_c: 30.0
+        bio_tmin_c: 5.0
+        dry_rh_threshold_percent: 60.0
+        dtr_threshold_c: 15.0
+        heavy_rain_threshold_mm: 20.0
+        hot_day_threshold_c: 30.0
+        humid_threshold_percent: 80.0
+        include_daily_series: false
+        lat: 43.5
+        lon: 11.25
+        rain_day_threshold_mm: 1.0
+        scenario: ssp245
+        very_hot_day_threshold_c: 35.0
+        very_humid_threshold_percent: 90.0
+        year: 2050
+    HeritageDailyRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Humid Threshold Percent
+          default: 80.0
+        very_humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Very Humid Threshold Percent
+          default: 90.0
+        dry_rh_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Dry Rh Threshold Percent
+          default: 60.0
+        dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: Dtr Threshold C
+          default: 15.0
+        hot_day_threshold_c:
+          type: number
+          title: Hot Day Threshold C
+          default: 30.0
+        very_hot_day_threshold_c:
+          type: number
+          title: Very Hot Day Threshold C
+          default: 35.0
+        bio_tmin_c:
+          type: number
+          title: Bio Tmin C
+          default: 5.0
+        bio_tmax_c:
+          type: number
+          title: Bio Tmax C
+          default: 30.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Date in dd/mm/yyyy format
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: HeritageDailyRequest
+      example:
+        bio_tmax_c: 30.0
+        bio_tmin_c: 5.0
+        date: 01/08/2050
+        dry_rh_threshold_percent: 60.0
+        dtr_threshold_c: 15.0
+        heavy_rain_threshold_mm: 20.0
+        hot_day_threshold_c: 30.0
+        humid_threshold_percent: 80.0
+        lat: 43.5
+        lon: 11.25
+        rain_day_threshold_mm: 1.0
+        scenario: ssp245
+        very_hot_day_threshold_c: 35.0
+        very_humid_threshold_percent: 90.0
+    HeritageDailyResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        date_requested:
+          type: string
+          title: Date Requested
+        date_dataset:
+          type: string
+          title: Date Dataset
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        values:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Values
+        flags:
+          additionalProperties:
+            type: boolean
+          type: object
+          title: Flags
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - scenario
+      - date_requested
+      - date_dataset
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - values
+      - flags
+      - thresholds
+      - files_used
+      - notes
+      title: HeritageDailyResponse
+    HeritageWindowRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Humid Threshold Percent
+          default: 80.0
+        very_humid_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Very Humid Threshold Percent
+          default: 90.0
+        dry_rh_threshold_percent:
+          type: number
+          maximum: 100.0
+          minimum: 0.0
+          title: Dry Rh Threshold Percent
+          default: 60.0
+        dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: Dtr Threshold C
+          default: 15.0
+        hot_day_threshold_c:
+          type: number
+          title: Hot Day Threshold C
+          default: 30.0
+        very_hot_day_threshold_c:
+          type: number
+          title: Very Hot Day Threshold C
+          default: 35.0
+        bio_tmin_c:
+          type: number
+          title: Bio Tmin C
+          default: 5.0
+        bio_tmax_c:
+          type: number
+          title: Bio Tmax C
+          default: 30.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Reference date in dd/mm/yyyy format
+        window_days:
+          type: integer
+          maximum: 366.0
+          minimum: 1.0
+          title: Window Days
+          default: 30
+        window_mode:
+          type: string
+          enum:
+          - centered
+          - backward
+          - forward
+          title: Window Mode
+          default: centered
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: HeritageWindowRequest
+      example:
+        bio_tmax_c: 30.0
+        bio_tmin_c: 5.0
+        date: 01/08/2050
+        dry_rh_threshold_percent: 60.0
+        dtr_threshold_c: 15.0
+        heavy_rain_threshold_mm: 20.0
+        hot_day_threshold_c: 30.0
+        humid_threshold_percent: 80.0
+        include_daily_series: false
+        lat: 43.5
+        lon: 11.25
+        rain_day_threshold_mm: 1.0
+        scenario: ssp245
+        very_hot_day_threshold_c: 35.0
+        very_humid_threshold_percent: 90.0
+        window_days: 30
+        window_mode: centered
+    TourismAggregateResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        tourism_profile:
+          type: string
+          title: Tourism Profile
+        aggregation:
+          type: string
+          title: Aggregation
+        period:
+          additionalProperties:
+            type: string
+          type: object
+          title: Period
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        indices:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Indices
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+        daily_series:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Daily Series
+        monthly_summary:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Monthly Summary
+        annual_series:
+          anyOf:
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+          - type: 'null'
+          title: Annual Series
+      type: object
+      required:
+      - scenario
+      - tourism_profile
+      - aggregation
+      - period
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - indices
+      - thresholds
+      - files_used
+      - notes
+      title: TourismAggregateResponse
+    TourismAnnualRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        very_heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Very Heavy Rain Threshold Mm
+          default: 50.0
+        humidex_discomfort_threshold:
+          type: number
+          title: Humidex Discomfort Threshold
+          default: 30.0
+        humidex_high_discomfort_threshold:
+          type: number
+          title: Humidex High Discomfort Threshold
+          default: 40.0
+        heat_index_warning_threshold_c:
+          type: number
+          title: Heat Index Warning Threshold C
+          default: 32.0
+        heat_index_danger_threshold_c:
+          type: number
+          title: Heat Index Danger Threshold C
+          default: 41.0
+        tropical_night_threshold_c:
+          type: number
+          title: Tropical Night Threshold C
+          default: 20.0
+        very_warm_night_threshold_c:
+          type: number
+          title: Very Warm Night Threshold C
+          default: 25.0
+        high_dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: High Dtr Threshold C
+          default: 18.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        year:
+          type: integer
+          minimum: 1.0
+          title: Year
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          default: urban_cultural
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+        include_monthly_summary:
+          type: boolean
+          title: Include Monthly Summary
+          default: true
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - year
+      title: TourismAnnualRequest
+      example:
+        include_daily_series: false
+        include_monthly_summary: true
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        tourism_profile: urban_cultural
+        year: 2050
+    TourismDailyRequest:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Date in dd/mm/yyyy format
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          description: 'Tourism profile: urban_cultural, historic_garden, walking_outdoor'
+          default: urban_cultural
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: TourismDailyRequest
+      example:
+        date: 01/08/2050
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        tourism_profile: urban_cultural
+    TourismDailyResponse:
+      properties:
+        scenario:
+          type: string
+          title: Scenario
+        tourism_profile:
+          type: string
+          title: Tourism Profile
+        date_requested:
+          type: string
+          title: Date Requested
+        date_dataset:
+          type: string
+          title: Date Dataset
+        lon_requested:
+          type: number
+          title: Lon Requested
+        lat_requested:
+          type: number
+          title: Lat Requested
+        lon_dataset:
+          type: number
+          title: Lon Dataset
+        lat_dataset:
+          type: number
+          title: Lat Dataset
+        values:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Values
+        flags:
+          additionalProperties:
+            type: boolean
+          type: object
+          title: Flags
+        scores:
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          type: object
+          title: Scores
+        thresholds:
+          additionalProperties:
+            type: number
+          type: object
+          title: Thresholds
+        files_used:
+          additionalProperties:
+            type: string
+          type: object
+          title: Files Used
+        notes:
+          items:
+            type: string
+          type: array
+          title: Notes
+      type: object
+      required:
+      - scenario
+      - tourism_profile
+      - date_requested
+      - date_dataset
+      - lon_requested
+      - lat_requested
+      - lon_dataset
+      - lat_dataset
+      - values
+      - flags
+      - scores
+      - thresholds
+      - files_used
+      - notes
+      title: TourismDailyResponse
+    TourismPeriodRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        very_heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Very Heavy Rain Threshold Mm
+          default: 50.0
+        humidex_discomfort_threshold:
+          type: number
+          title: Humidex Discomfort Threshold
+          default: 30.0
+        humidex_high_discomfort_threshold:
+          type: number
+          title: Humidex High Discomfort Threshold
+          default: 40.0
+        heat_index_warning_threshold_c:
+          type: number
+          title: Heat Index Warning Threshold C
+          default: 32.0
+        heat_index_danger_threshold_c:
+          type: number
+          title: Heat Index Danger Threshold C
+          default: 41.0
+        tropical_night_threshold_c:
+          type: number
+          title: Tropical Night Threshold C
+          default: 20.0
+        very_warm_night_threshold_c:
+          type: number
+          title: Very Warm Night Threshold C
+          default: 25.0
+        high_dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: High Dtr Threshold C
+          default: 18.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        start_year:
+          type: integer
+          minimum: 1.0
+          title: Start Year
+        end_year:
+          anyOf:
+          - type: integer
+            minimum: 1.0
+          - type: 'null'
+          title: End Year
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          default: urban_cultural
+        include_annual_series:
+          type: boolean
+          title: Include Annual Series
+          default: true
+        include_monthly_summary:
+          type: boolean
+          title: Include Monthly Summary
+          default: true
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - start_year
+      title: TourismPeriodRequest
+      example:
+        end_year: 2060
+        include_annual_series: true
+        include_monthly_summary: true
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        start_year: 2041
+        tourism_profile: urban_cultural
+    TourismWindowRequest:
+      properties:
+        rain_day_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Rain Day Threshold Mm
+          default: 1.0
+        heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Heavy Rain Threshold Mm
+          default: 20.0
+        very_heavy_rain_threshold_mm:
+          type: number
+          minimum: 0.0
+          title: Very Heavy Rain Threshold Mm
+          default: 50.0
+        humidex_discomfort_threshold:
+          type: number
+          title: Humidex Discomfort Threshold
+          default: 30.0
+        humidex_high_discomfort_threshold:
+          type: number
+          title: Humidex High Discomfort Threshold
+          default: 40.0
+        heat_index_warning_threshold_c:
+          type: number
+          title: Heat Index Warning Threshold C
+          default: 32.0
+        heat_index_danger_threshold_c:
+          type: number
+          title: Heat Index Danger Threshold C
+          default: 41.0
+        tropical_night_threshold_c:
+          type: number
+          title: Tropical Night Threshold C
+          default: 20.0
+        very_warm_night_threshold_c:
+          type: number
+          title: Very Warm Night Threshold C
+          default: 25.0
+        high_dtr_threshold_c:
+          type: number
+          minimum: 0.0
+          title: High Dtr Threshold C
+          default: 18.0
+        scenario:
+          type: string
+          title: Scenario
+          description: 'Scenario: ssp126, ssp245, ssp585'
+        lon:
+          type: number
+          title: Lon
+          description: Longitude in degrees
+        lat:
+          type: number
+          title: Lat
+          description: Latitude in degrees
+        date:
+          type: string
+          title: Date
+          description: Reference date in dd/mm/yyyy format
+        window_days:
+          type: integer
+          maximum: 366.0
+          minimum: 1.0
+          title: Window Days
+          default: 30
+        window_mode:
+          type: string
+          enum:
+          - centered
+          - backward
+          - forward
+          title: Window Mode
+          default: centered
+        tourism_profile:
+          type: string
+          enum:
+          - urban_cultural
+          - historic_garden
+          - walking_outdoor
+          title: Tourism Profile
+          default: urban_cultural
+        include_daily_series:
+          type: boolean
+          title: Include Daily Series
+          default: false
+      type: object
+      required:
+      - scenario
+      - lon
+      - lat
+      - date
+      title: TourismWindowRequest
+      example:
+        date: 01/08/2050
+        include_daily_series: false
+        lat: 43.5
+        lon: 11.25
+        scenario: ssp245
+        tourism_profile: urban_cultural
+        window_days: 30
+        window_mode: centered
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+servers:
+- url: http://10.0.4.10:8102
+  description: FutureClimate on ARTEMIS development VM
+- url: http://localhost:8102
+  description: FutureClimate local port mapping
+tags: []

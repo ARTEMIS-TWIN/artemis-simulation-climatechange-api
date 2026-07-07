@@ -1,0 +1,272 @@
+openapi: 3.1.0
+info:
+  title: Sensor Simulator - Single Sensor
+  description: 'Stateless microservice to simulate a sensor using statistical distributions. The sensor is defined by the
+    user in the JSON body of each request: no data is stored on the server.'
+  version: 1.0.0
+  x-artemis-service: SingleSensor
+paths:
+  /:
+    get:
+      summary: Service info
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /distributions:
+    get:
+      summary: List supported distributions
+      description: Returns the names of all supported distributions.
+      operationId: list_distributions_distributions_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /examples:
+    get:
+      summary: Parameter examples for each distribution
+      description: Returns a parameter example for each supported distribution.
+      operationId: list_examples_examples_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /reading:
+    post:
+      summary: Generate a single reading from the sensor defined in the body
+      description: Generates **one reading** from the sensor described in the JSON body.
+      operationId: get_reading_reading_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorConfig'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorReading'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /readings:
+    post:
+      summary: Generate N readings from the sensor defined in the body
+      description: "Generates **N readings** (1–1000) from the sensor described in the JSON body.\n\nExample body:\n```json\n\
+        {\n  \"sensor\": {\n    \"name\": \"temperature\",\n    \"lat\": 41.9028,\n    \"lon\": 12.4964,\n    \"localization\"\
+        : \"room 1\",\n    \"unit\": \"°C\",\n    \"distribution\": \"normal\",\n    \"params\": { \"mean\": 20.0, \"stddev\"\
+        : 2.0 }\n  },\n  \"n\": 10\n}\n```"
+      operationId: get_readings_readings_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReadingRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SensorReading'
+                type: array
+                title: Response Get Readings Readings Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ReadingRequest:
+      properties:
+        sensor:
+          $ref: '#/components/schemas/SensorConfig'
+        n:
+          type: integer
+          maximum: 1000.0
+          minimum: 1.0
+          title: N
+          description: Number of readings to generate
+          default: 1
+      type: object
+      required:
+      - sensor
+      title: ReadingRequest
+    SensorConfig:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Sensor name (e.g. 'temperature')
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+          description: Geographic latitude
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+          description: Geographic longitude
+        localization:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Localization
+          description: Textual location (e.g. 'room 1')
+        unit:
+          type: string
+          title: Unit
+          description: Unit of measure (e.g. '°C', 'mm/h')
+        distribution:
+          type: string
+          enum:
+          - bernoulli
+          - beta
+          - cauchy
+          - discrete_uniform
+          - erlang
+          - exponential
+          - extreme_value_1a
+          - extreme_value_1b
+          - gamma
+          - inverse_gaussian
+          - inverse_weibull
+          - inverted_weibull
+          - johnson_bounded
+          - johnson_unbounded
+          - laplace
+          - logistic
+          - log_laplace
+          - log_logistic
+          - log_normal
+          - log_normal_2
+          - log_normal_mean_stddev
+          - normal
+          - pareto
+          - pearson_type_5
+          - pearson_type_6
+          - poisson
+          - triangular
+          - uniform
+          - weibull
+          - empirical
+          title: Distribution
+          description: Statistical distribution type
+        params:
+          additionalProperties: true
+          type: object
+          title: Params
+          description: Distribution parameters
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Free-text description of the sensor
+      type: object
+      required:
+      - name
+      - unit
+      - distribution
+      title: SensorConfig
+    SensorReading:
+      properties:
+        sensor:
+          type: string
+          title: Sensor
+        value:
+          type: number
+          title: Value
+        unit:
+          type: string
+          title: Unit
+        lat:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lat
+        lon:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Lon
+        localization:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Localization
+        timestamp:
+          type: string
+          format: date-time
+          title: Timestamp
+      type: object
+      required:
+      - sensor
+      - value
+      - unit
+      - lat
+      - lon
+      - localization
+      - timestamp
+      title: SensorReading
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+        input:
+          title: Input
+        ctx:
+          type: object
+          title: Context
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+servers:
+- url: http://10.0.4.10:8105
+  description: SingleSensor on ARTEMIS development VM
+- url: http://localhost:8105
+  description: SingleSensor local port mapping
+tags: []
