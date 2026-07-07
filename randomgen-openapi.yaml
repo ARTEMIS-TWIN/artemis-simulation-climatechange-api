@@ -1,11 +1,8 @@
 openapi: 3.1.0
 info:
   title: Simulation Procedures Service
-  description: 'Stateless microservice that draws n samples from a probability distribution. POST the distribution name, its
+  description: Stateless microservice that draws n samples from a probability distribution. POST the distribution name, its
     parameters and the desired sample size — receive a list of floating-point values.
-
-
-    ARTEMIS Development VM server: http://10.0.4.10:8103.'
   version: 1.0.0
   x-artemis-service: RandomGen
 paths:
@@ -207,7 +204,7 @@ components:
       title: ValidationError
 servers:
 - url: http://10.0.4.10:8103
-  description: RandomGen on ARTEMIS Development VM
+  description: RandomGen on ARTEMIS development VM
 - url: http://localhost:8103
   description: RandomGen local port mapping
 tags: []

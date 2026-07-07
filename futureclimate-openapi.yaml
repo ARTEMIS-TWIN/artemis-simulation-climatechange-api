@@ -1,11 +1,8 @@
 openapi: 3.1.0
 info:
   title: Future Climate Sensor API
-  description: 'API microservice returning climate values from CMIP6 NetCDF files, with selectable scenario and climate variable.
+  description: API microservice returning climate values from CMIP6 NetCDF files, with selectable scenario and climate variable.
     The API also exposes heritage-oriented climate indices for outdoor monuments, historic architecture and historic gardens.
-
-
-    ARTEMIS Development VM server: http://10.0.4.10:8102.'
   version: 2.5.0
   x-artemis-service: FutureClimate
 paths:
@@ -1416,7 +1413,7 @@ components:
       title: ValidationError
 servers:
 - url: http://10.0.4.10:8102
-  description: FutureClimate on ARTEMIS Development VM
+  description: FutureClimate on ARTEMIS development VM
 - url: http://localhost:8102
   description: FutureClimate local port mapping
 tags: []

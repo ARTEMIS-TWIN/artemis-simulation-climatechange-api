@@ -1,10 +1,7 @@
 openapi: 3.1.0
 info:
   title: Weather Sensors Simulator - Stateless
-  description: 'Stateless microservice for sensor network simulation passed entirely via JSON.
-
-
-    ARTEMIS Development VM server: http://10.0.4.10:8104.'
+  description: Stateless microservice for sensor network simulation passed entirely via JSON.
   version: 7.0.0
   x-artemis-service: SensorCluster
 paths:
@@ -293,7 +290,7 @@ components:
       title: ValidationError
 servers:
 - url: http://10.0.4.10:8104
-  description: SensorCluster on ARTEMIS Development VM
+  description: SensorCluster on ARTEMIS development VM
 - url: http://localhost:8104
   description: SensorCluster local port mapping
 tags: []

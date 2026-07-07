@@ -1,11 +1,8 @@
 openapi: 3.1.0
 info:
   title: Surface Temperature Simulator API (OBJ Prototype)
-  description: 'One-time upload of OBJ models, multi-user filesystem registration, thermal simulation on an existing model,
+  description: One-time upload of OBJ models, multi-user filesystem registration, thermal simulation on an existing model,
     and direct JSON response for Unity.
-
-
-    ARTEMIS Development VM server: http://10.0.4.10:8106.'
   version: 11.0.0
   x-artemis-service: SurfaceTemp
 paths:
@@ -492,7 +489,7 @@ components:
       title: ValidationError
 servers:
 - url: http://10.0.4.10:8106
-  description: SurfaceTemp on ARTEMIS Development VM
+  description: SurfaceTemp on ARTEMIS development VM
 - url: http://localhost:8106
   description: SurfaceTemp local port mapping
 tags: []

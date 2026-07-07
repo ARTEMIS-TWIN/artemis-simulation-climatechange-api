@@ -1,12 +1,16 @@
-# ARTEMIS Python API Documentation
+# ARTEMIS Python API documentation
 
-This package contains:
+Updated package including SurfaceTemp.
 
-- `index.html`: Swagger UI with the complete catalog and per-service OpenAPI definitions.
-- `openapi.yaml`: complete aggregated catalog. Useful for browsing all endpoints together; not intended for Execute because paths are prefixed to avoid endpoint-name collisions.
-- `*-openapi.yaml`: executable per-service OpenAPI definitions using the development VM ports 8101-8106.
+Files:
 
-Development service URLs:
+- `index.html`: Swagger UI page with a dropdown for the aggregate catalog and individual service specs.
+- `openapi.yaml`: aggregate catalog with documentation prefixes.
+- Individual OpenAPI files for ClimateRag, FutureClimate, RandomGen, SensorCluster, SingleSensor and SurfaceTemp.
+
+For direct Swagger "Try it out" calls, select the individual service spec. The aggregate spec is mainly a catalog, because several services can share the same paths.
+
+Expected ARTEMIS development ports:
 
 - ClimateRag: `http://10.0.4.10:8101`
 - FutureClimate: `http://10.0.4.10:8102`
@@ -14,5 +18,3 @@ Development service URLs:
 - SensorCluster: `http://10.0.4.10:8104`
 - SingleSensor: `http://10.0.4.10:8105`
 - SurfaceTemp: `http://10.0.4.10:8106`
-
-When hosted on GitHub Pages, the complete catalog is suitable for public documentation. Browser-based Execute against the internal HTTP VM may still be blocked by mixed-content/CORS/private-network browser policies.
